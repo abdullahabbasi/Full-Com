@@ -1,0 +1,21 @@
+        var data = new FormData();
+        data.append('fileData', {
+            uri : Platform.OS === 'android' ? this.state.pickedImage.uri : this.state.pickedImage.uri.replace('file://', ''),
+            type:  this.state.pickedImage.type,
+            name:  this.state.pickedImage.fileName
+        });
+        
+        var config = {
+            method: 'POST',
+            headers: {
+             'Accept': 'application/json',
+             'Content-Type': 'multipart/form-data',
+            },
+            body: data,
+        };
+        console.log('before call ', data)
+        fetch("http://techserver.techbuiz.com:8081/api/addProduct", config)
+            .then((checkStatusAndGetJSONResponse)=>{       
+            console.log(checkStatusAndGetJSONResponse);
+            this.props.navigation.navigate('WelcomeScene'); 
+        }).catch((err)=>{console.log(err)});
